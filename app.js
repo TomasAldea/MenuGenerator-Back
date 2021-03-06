@@ -8,5 +8,7 @@ require("./config/session.config")(app);
 
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
+const recipeRoutes = require("./routes/recipe.routes");
+app.use("/recipes", recipeRoutes);
 
 app.listen(process.env.PORT, () => console.log("server running"));
