@@ -6,12 +6,14 @@ const {
 recipeCreate,
 recipeDelete,
 recipeUpdate,
+getRecipe,
 
 } = require("../controllers/recipe.controllers.js")
 
 route
+.get("/recipe/:recipeId", getRecipe)
 .post("/recipe", recipeCreate)
-.put("recipe/:recipeId", recipeUpdate)
+.post("recipe/:recipeId", recipeUpdate)
 .delete("/recipe/:recipeId", recipeDelete)
 
 

@@ -1,10 +1,11 @@
-const { findByIdAndDelete } = require("../model/recipe.model");
-const Recipe = require("../model/recipe.model");
+const { findByIdAndDelete } = require("../model/recipes.model");
+const Recipes = require("../model/recipes.model");
 
+//-----recipe create------//
 exports.recipeCreate = async (req, res) => {
   try {
     const { name, description, ingredients, category } = req.body;
-    const newRecipe = await Recipe.create({
+    const newRecipe = await Recipes.create({
       name,
       description,
       ingredients,
@@ -21,28 +22,48 @@ exports.recipeCreate = async (req, res) => {
   }
 };
 
+//-----get one recipe------//
+exports.getRecipe = async (req, res) => {
+  try {
+    const { recipeId } = req.params;
+    const oneRecipe = await Recipes.findById(recipeId).lean();
+   
+    return res.status(200).json({
+      name: oneRecipe.name,
+      description: oneRecipe.description,
+      ingredients: oneRecipe.ingredients,
+      category: oneRecipe.category,
+    });
+    
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: "get recipe error" }, error);
+  }
+};
+
+//-----delete create------//
 exports.recipeDelete = async (req, res) => {
   try {
     const { recipeId } = req.params;
-    const deletedRecipe = await Recipe.findByIdAndDelete(recipeId);
+    const deletedRecipe = await Recipes.findByIdAndDelete(recipeId);
     return res.status(200).json({ message: "recipe delete success" });
   } catch (error) {
-    //console.log("🚀 ~ file: recipe.controllers.js ~ line 33 ~ exports.recipeDelete ~ error", error)
     return res.status(400).json({ message: "delete recipe error" }, error);
   }
 };
 
+//-----recipe update------// no works!
 exports.recipeUpdate = async (req, res) => {
   try {
     const { recipeId } = req.params;
     const { name, description, ingredients, category } = req.body;
-    let recipeUpdate = await Recipe.findById(recipeId);
+    let recipeUpdate = await Recipes.findById(recipeId);
 
     const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, {
-      name: name,
-      description: description,
-      ingredients: ingredients,
-      category: category,
+      name,
+      description,
+      ingredients,
+      category,
     });
     return res.status(200).json({
       name: updatedRecipe.name,
