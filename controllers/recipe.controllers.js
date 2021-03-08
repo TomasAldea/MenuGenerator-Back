@@ -3,8 +3,10 @@ const Recipes = require("../model/recipes.model");
 
 //-----recipe create------//
 exports.recipeCreate = async (req, res) => {
+  console.log("entra", req.body) 
   try {
     const { name, description, ingredients, category } = req.body;
+
     const newRecipe = await Recipes.create({
       name,
       description,
@@ -18,9 +20,21 @@ exports.recipeCreate = async (req, res) => {
       category: newRecipe.category,
     });
   } catch (error) {
+    console.log("error", error)
     return res.status(400).json({ message: "create recipe error" });
   }
 };
+
+//-----get all recipes------//
+exports.getRecipes = async (req, res) => {
+  try {
+    const recipes = await Recipes.find({}).lean()
+    return res.status(200).json({recipes})
+  } catch (error) {
+    return res.status(400).json({ message: "get recipes error" });
+  }
+}
+
 
 //-----get one recipe------//
 exports.getRecipe = async (req, res) => {
@@ -37,7 +51,7 @@ exports.getRecipe = async (req, res) => {
     
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ message: "get recipe error" }, error);
+    return res.status(400).json({ message: "get recipe error" });
   }
 };
 
