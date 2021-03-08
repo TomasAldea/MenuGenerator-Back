@@ -19,4 +19,4 @@ const RecipeSchema = new mongoose.Schema({
     owner: [ { type: mongoose.Schema.Types.ObjectId, ref: "User" } ],
   });
   
-  module.exports = mongoose.model("Recipe", RecipeSchema);
+  module.exports = mongoose.model("Recipes", RecipeSchema);
