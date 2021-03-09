@@ -31,6 +31,8 @@ exports.signup = async (req, res) => {
 
     req.session.userId = newUser._id;
 
+    console.log("signup success")
+
     return res.status(200).json({ user: newUser.email, id: newUser._id });
   } catch (e) {
     if (isMongooseErrorValidation(e)) {
@@ -70,6 +72,7 @@ exports.login = async (req, res) => {
     req.session.userId = user._id;
 
     return res.status(200).json({ user: user.email, id: user._id });
+    console.log("login success")
   } catch (e) {
     if (isMongooseErrorValidation(e)) {
       return res.status(400).json({ message: "incorrect email format" });
@@ -80,6 +83,7 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
   await req.session.destroy();
+  console.log("logout success")
   res.status(200).json({ message: "logout" });
 };
 
