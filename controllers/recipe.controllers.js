@@ -3,7 +3,6 @@ const Recipes = require("../model/recipes.model");
 
 //-----recipe create------//
 exports.recipeCreate = async (req, res) => {
-  console.log("entra", req.body) 
   try {
     const { name, description, ingredients, category } = req.body;
 
@@ -86,7 +85,7 @@ exports.recipeUpdate = async (req, res) => {
       category: updatedRecipe.category,
     });
   } catch (error) {
-    console.log("🚀 ~ file: recipe.controllers.js ~ line 53 ~ exports.recipeUpdate= ~ error", error)
-    //return res.status(400).json({ message: "update recipe error" }, error);
+    console.log("update error", error)
+    return res.status(400).json({ message: "update recipe error" });
   }
 };
