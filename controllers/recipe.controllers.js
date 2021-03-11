@@ -20,7 +20,7 @@ exports.recipeCreate = async (req, res) => {
     });
   } catch (error) {
     console.log("error", error)
-    return res.status(400).json({ message: "create recipe error" });
+    return res.status(400).json({ message: "create recipe error", error });
   }
 };
 
@@ -28,7 +28,7 @@ exports.recipeCreate = async (req, res) => {
 exports.getRecipes = async (req, res) => {
   try {
     const recipes = await Recipes.find({}).lean()
-    return res.status(200).json({recipes})
+    return res.status(200).json(recipes)
   } catch (error) {
     return res.status(400).json({ message: "get recipes error" });
   }
