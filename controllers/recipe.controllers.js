@@ -57,6 +57,7 @@ exports.getRecipe = async (req, res) => {
 
 
 //-----get one recipe by cat------//
+/*
 const countByCat = async () => {
   try {
     Recipes.countDocuments({category:'first'}).exec((err, count) => {
@@ -73,9 +74,9 @@ const countByCat = async () => {
     return res.status(400).json({ message: "get random 1 error" });
   }
 };
+*/
 
-
-
+//-----get one recipe by cat------//
 exports.getRandomRecipeByCat = async (req, res) => {
   try {
     const { catString } = req.params;
