@@ -1,10 +1,12 @@
 const { json } = require("body-parser");
 const { findByIdAndDelete } = require("../model/recipes.model");
-const Recipes = require("../model/recipes.model");
+const Recipes = require("../model/recipes.model")
+
 
 //-----recipe create------//
 exports.recipeCreate = async (req, res) => {
   try {
+ //console.log("SESSION:", req.session.currentUser._id)
     const { name, description, ingredients, category } = req.body;
 
     const newRecipe = await Recipes.create({

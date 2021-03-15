@@ -11,4 +11,5 @@ app.use("/auth", authRoutes);
 const recipeRoutes = require("./routes/recipe.routes");
 app.use("/recipes", recipeRoutes);
 
-app.listen(process.env.PORT, () => console.log("server running"));
+app.listen(process.env.PORT, () => console.log(`server running on port:${process.env.PORT}`));
+
