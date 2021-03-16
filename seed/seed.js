@@ -2,7 +2,7 @@
 require("dotenv").config()
 const mongoose = require("mongoose")
 const data = require("./data")
-const Recipe = require("../model/recipe.model")
+const Recipe = require("../model/recipes.model")
 
 const dbOptions = {
     useCreateIndex: true,

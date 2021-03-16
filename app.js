@@ -10,6 +10,9 @@ const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 const recipeRoutes = require("./routes/recipe.routes");
 app.use("/recipes", recipeRoutes);
+const weekRoutes = require("./routes/week.routes");
+app.use("/week", weekRoutes);
+
 
 app.listen(process.env.PORT, () => console.log(`server running on port:${process.env.PORT}`));
 
