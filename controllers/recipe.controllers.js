@@ -78,34 +78,6 @@ const countByCat = async () => {
 };
 */
 
-//-----get one recipe by cat------//
-exports.getRandomRecipeByCat = async (req, res) => {
-  try {
-    const { catString } = req.params;
-
-          // Get the count of all users
-      Recipes.count({category:catString}).exec(function (err, count) {
-
-        // Get a random entry
-        var random = Math.floor(Math.random() * count)
-
-        // Again query all users but only fetch one offset by our random #
-        Recipes.findOne({category:catString}).skip(random).exec(
-          function (err, result) {
-            // Tada! random user
-            console.log(result) 
-            return res.status(200).json(result);
-          })
-      })
-
-   
-    
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ message: "get random 2 error" });
-  }
-};
-
 
 //-----delete create------//
 exports.recipeDelete = async (req, res) => {

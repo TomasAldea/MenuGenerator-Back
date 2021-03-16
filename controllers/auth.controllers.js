@@ -70,6 +70,7 @@ exports.login = async (req, res) => {
     }
 
     req.session.userId = user._id;
+    return res.status(200).json({  message: "login success!"  });
 
     return res.status(200).json({ user: user.email, id: user._id });
     console.log("login success")
