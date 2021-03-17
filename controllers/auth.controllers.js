@@ -8,8 +8,8 @@ const {
 
 exports.signup = async (req, res) => {
   try {
-    const { password, email } = req.body;
-    const hasMissingCredentials = !password || !email;
+    const { password, email, name } = req.body;
+    const hasMissingCredentials = !password || !email || !name;
     if (hasMissingCredentials) {
       return res.status(400).json({ message: "missing credentials" });
     }
@@ -24,16 +24,22 @@ exports.signup = async (req, res) => {
       return res.status(400).json({ message: "user alredy exists" });
     }
 
+    const userName = await User.findOne({ name });
+
+    if (user) {
+      return res.status(400).json({ message: "user alredy exists" });
+    }
+
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const newUser = await User.create({ email, hashedPassword });
+    const newUser = await User.create({ email, hashedPassword, name });
 
     req.session.userId = newUser._id;
 
     console.log("signup success")
 
-    return res.status(200).json({ user: newUser.email, id: newUser._id });
+    return res.status(200).json({ user: newUser.email, id: newUser._id, name: newUser.name });
   } catch (e) {
     if (isMongooseErrorValidation(e)) {
       return res.status(400).json({ message: "incorrect email format" });
@@ -70,9 +76,8 @@ exports.login = async (req, res) => {
     }
 
     req.session.userId = user._id;
-    return res.status(200).json({  message: "login success!"  });
-
-    return res.status(200).json({ user: user.email, id: user._id });
+    
+    return res.status(200).json({ user: user.email, id: user._id, name: user.name });
     console.log("login success")
   } catch (e) {
     if (isMongooseErrorValidation(e)) {
@@ -90,6 +95,6 @@ exports.logout = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   const { userId } = req.session;
-  const { email, _id } = await User.findOne(userId);
-  res.status(200).json({ id: _id, email });
+  const { email, _id, name } = await User.findOne(userId);
+  res.status(200).json({ id: _id, email, name });
 };
