@@ -53,6 +53,7 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
+
     const { password, email } = req.body;
     const hasMissingCredentials = !password || !email;
     if (hasMissingCredentials) {
