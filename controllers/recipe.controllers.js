@@ -6,7 +6,7 @@ const Recipes = require("../model/recipes.model")
 //-----recipe create------//
 exports.recipeCreate = async (req, res) => {
   try {
- //console.log("SESSION:", req.session.currentUser._id)
+  console.log("SESSION:", req.session.userId)
     const { name, description, ingredients, category } = req.body;
 
     const newRecipe = await Recipes.create({
@@ -20,6 +20,7 @@ exports.recipeCreate = async (req, res) => {
       description: newRecipe.description,
       ingredients: newRecipe.ingredients,
       category: newRecipe.category,
+
     });
   } catch (error) {
     console.log("error", error)
