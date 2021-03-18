@@ -6,7 +6,7 @@ const Recipes = require("../model/recipes.model")
 //-----recipe create------//
 exports.recipeCreate = async (req, res) => {
   try {
- //console.log("SESSION:", req.session.currentUser._id)
+  console.log("SESSION:", req.session.userId)
     const { name, description, ingredients, category } = req.body;
 
     const newRecipe = await Recipes.create({
@@ -20,6 +20,7 @@ exports.recipeCreate = async (req, res) => {
       description: newRecipe.description,
       ingredients: newRecipe.ingredients,
       category: newRecipe.category,
+
     });
   } catch (error) {
     console.log("error", error)
@@ -56,28 +57,6 @@ exports.getRecipe = async (req, res) => {
     return res.status(400).json({ message: "get recipe error" });
   }
 };
-
-
-//-----get one recipe by cat------//
-/*
-const countByCat = async () => {
-  try {
-    Recipes.countDocuments({category:'first'}).exec((err, count) => {
-      if (err) {
-          res.send(err);
-          return;
-      }
-      console.log(count)
-      return count;
-    });
-    
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json({ message: "get random 1 error" });
-  }
-};
-*/
-
 
 //-----delete create------//
 exports.recipeDelete = async (req, res) => {
