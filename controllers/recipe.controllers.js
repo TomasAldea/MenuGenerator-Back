@@ -6,7 +6,7 @@ const User = require("../model/user.model");
 //-----recipe create------//
 exports.recipeCreate = async (req, res) => {
   try {
-    const { name, description, ingredients, category } = req.body;
+    const { name, description, ingredients, category, image } = req.body;
 
     const newRecipe = await Recipes.create({
       name,
@@ -14,17 +14,14 @@ exports.recipeCreate = async (req, res) => {
       ingredients,
       category,
       owner: req.session.userId,
+      image,
     });
     await User.findByIdAndUpdate(req.session.userId, {
       $push: { createsRecipes: newRecipe._id },
     });
-    return res.status(200).json({
-      name: newRecipe.name,
-      description: newRecipe.description,
-      ingredients: newRecipe.ingredients,
-      category: newRecipe.category,
-      owner: req.session.userId,
-    });
+    return res.status(200).json(
+     newRecipe
+    );
    
   } catch (error) {
     console.log("error", error);
@@ -48,12 +45,7 @@ exports.getRecipe = async (req, res) => {
     const { recipeId } = req.params;
     const oneRecipe = await Recipes.findById(recipeId).lean();
 
-    return res.status(200).json({
-      name: oneRecipe.name,
-      description: oneRecipe.description,
-      ingredients: oneRecipe.ingredients,
-      category: oneRecipe.category,
-    });
+    return res.status(200).json(oneRecipe);
   } catch (error) {
     console.log(error);
     return res.status(400).json({ message: "get recipe error" });
@@ -72,7 +64,7 @@ exports.recipeDelete = async (req, res) => {
   }
 };
 
-//-----recipe update------// no works!
+//-----recipe update------// 
 exports.recipeUpdate = async (req, res) => {
   try {
     const { recipeId } = req.params;
@@ -97,3 +89,6 @@ exports.recipeUpdate = async (req, res) => {
     return res.status(400).json({ message: "update recipe error" });
   }
 };
+
+//-----upload file------//
+
