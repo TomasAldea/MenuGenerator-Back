@@ -37,9 +37,9 @@ exports.signup = async (req, res) => {
 
     req.session.userId = newUser._id;
 
-    console.log("signup success")
-
-    return res.status(200).json({ user: newUser.email, id: newUser._id, name: newUser.name });
+    return res
+      .status(200)
+      .json({ user: newUser.email, id: newUser._id, name: newUser.name });
   } catch (e) {
     if (isMongooseErrorValidation(e)) {
       return res.status(400).json({ message: "incorrect email format" });
@@ -53,7 +53,6 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-
     const { password, email } = req.body;
     const hasMissingCredentials = !password || !email;
     if (hasMissingCredentials) {
@@ -77,9 +76,10 @@ exports.login = async (req, res) => {
     }
 
     req.session.userId = user._id;
-    
-    return res.status(200).json({ user: user.email, id: user._id, name: user.name });
-    console.log("login success")
+
+    return res
+      .status(200)
+      .json({ user: user.email, id: user._id, name: user.name });
   } catch (e) {
     if (isMongooseErrorValidation(e)) {
       return res.status(400).json({ message: "incorrect email format" });
@@ -90,12 +90,14 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
   await req.session.destroy();
-  console.log("logout success")
   res.status(200).json({ message: "logout" });
 };
 
 exports.getUser = async (req, res) => {
   const { userId } = req.session;
-  const { email, _id, name } = await User.findOne(userId);
-  res.status(200).json({ id: _id, email, name });
+  const { email, _id, name, createsRecipes } = await User.findById(userId)
+    .populate("createsRecipes")
+    .lean();
+    console.log("createsRecipes", createsRecipes)
+  res.status(200).json({ id: _id, email, name, createsRecipes});
 };

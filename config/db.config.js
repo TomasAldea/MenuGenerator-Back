@@ -11,5 +11,4 @@ const dbOptions = {
 
 module.exports = async () => {
   await mongoose.connect(MONGODB_URI, dbOptions);
-  console.log("connected to db");
 };

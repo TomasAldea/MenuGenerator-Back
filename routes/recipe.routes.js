@@ -16,7 +16,7 @@ route
 .get("/recipe/:recipeId", getRecipe)
 .get("/allrecipes" , getRecipes)
 .post("/recipe", recipeCreate)
-.patch("/recipe/:recipeId", recipeUpdate)
+.put("/recipe/:recipeId", recipeUpdate)
 .delete("/recipe/:recipeId", recipeDelete)
 .post('/recipe/upload', fileParser.single('image'), (req, res, next) => {
     console.log('req.file', req.file);
