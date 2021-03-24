@@ -98,6 +98,5 @@ exports.getUser = async (req, res) => {
   const { email, _id, name, createsRecipes } = await User.findById(userId)
     .populate("createsRecipes")
     .lean();
-    console.log("createsRecipes", createsRecipes)
   res.status(200).json({ id: _id, email, name, createsRecipes});
 };

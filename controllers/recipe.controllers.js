@@ -76,7 +76,6 @@ exports.recipeUpdate = async (req, res) => {
       ingredients,
       category,
     });
-    console.log("edit success");
 
     return res.status(200).json({
       name: updatedRecipe.name,
