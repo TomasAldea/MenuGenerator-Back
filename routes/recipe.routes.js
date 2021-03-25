@@ -19,7 +19,6 @@ route
 .put("/recipe/:recipeId", recipeUpdate)
 .delete("/recipe/:recipeId", recipeDelete)
 .post('/recipe/upload', fileParser.single('image'), (req, res, next) => {
-    console.log('req.file', req.file);
     if(!req.file) {
       next(new Error('No file uploaded'));
       return;
