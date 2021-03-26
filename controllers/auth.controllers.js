@@ -11,23 +11,23 @@ exports.signup = async (req, res) => {
     const { password, email, name } = req.body;
     const hasMissingCredentials = !password || !email || !name;
     if (hasMissingCredentials) {
-      return res.status(400).json({ message: "missing credentials" });
+      return res.status(400).json({ message: "Missing credentials" });
     }
 
     if (!hasCorrectPasswordFormat(password)) {
-      return res.status(400).json({ message: "incorrect password format" });
+      return res.status(400).json({ message: "Incorrect password format" });
     }
 
     const user = await User.findOne({ email });
 
     if (user) {
-      return res.status(400).json({ message: "user alredy exists" });
+      return res.status(400).json({ message: "User alredy exists" });
     }
 
     const userName = await User.findOne({ name });
 
     if (user) {
-      return res.status(400).json({ message: "user alredy exists" });
+      return res.status(400).json({ message: "User alredy exists" });
     }
 
     const saltRounds = 10;
@@ -42,12 +42,12 @@ exports.signup = async (req, res) => {
       .json({ user: newUser.email, id: newUser._id, name: newUser.name });
   } catch (e) {
     if (isMongooseErrorValidation(e)) {
-      return res.status(400).json({ message: "incorrect email format" });
+      return res.status(400).json({ message: "Incorrect email format" });
     }
     if (isMongoError(e)) {
-      return res.status(400).json({ message: "duplicate field" });
+      return res.status(400).json({ message: "Duplicate field" });
     }
-    return res.status(400).json({ message: "wrong request" });
+    return res.status(400).json({ message: "Wrong request" });
   }
 };
 
@@ -56,23 +56,23 @@ exports.login = async (req, res) => {
     const { password, email } = req.body;
     const hasMissingCredentials = !password || !email;
     if (hasMissingCredentials) {
-      return res.status(400).json({ message: "missing credentials" });
+      return res.status(400).json({ message: "Missing credentials" });
     }
 
     if (!hasCorrectPasswordFormat(password)) {
-      return res.status(400).json({ message: "incorrect password format" });
+      return res.status(400).json({ message: "Incorrect password format" });
     }
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "user does not exist" });
+      return res.status(400).json({ message: "User does not exist" });
     }
     const hasCorrectPassword = await bcrypt.compare(
       password,
       user.hashedPassword
     );
     if (!hasCorrectPassword) {
-      return res.status(401).json({ message: "unauthorize" });
+      return res.status(401).json({ message: "Unauthorize" });
     }
 
     req.session.userId = user._id;
