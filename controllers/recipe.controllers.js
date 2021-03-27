@@ -68,13 +68,14 @@ exports.recipeDelete = async (req, res) => {
 exports.recipeUpdate = async (req, res) => {
   try {
     const { recipeId } = req.params;
-    const { name, description, ingredients, category } = req.body;
+    const { name, description, ingredients, category, image } = req.body;
 
     const updatedRecipe = await Recipes.findByIdAndUpdate(recipeId, {
       name,
       description,
       ingredients,
       category,
+      image,
     });
 
     return res.status(200).json({
@@ -82,6 +83,7 @@ exports.recipeUpdate = async (req, res) => {
       description: updatedRecipe.description,
       ingredients: updatedRecipe.ingredients,
       category: updatedRecipe.category,
+      image: updatedRecipe.image,
     });
   } catch (error) {
     console.log("update error", error);
