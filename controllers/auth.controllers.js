@@ -26,7 +26,7 @@ exports.signup = async (req, res) => {
 
     const userName = await User.findOne({ name });
 
-    if (user) {
+    if (userName) {
       return res.status(400).json({ message: "User alredy exists" });
     }
 
