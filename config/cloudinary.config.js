@@ -14,7 +14,7 @@ const storage = new CloudinaryStorage({
   params: {
     folder: 'MenuGenerator',
     format: async (req, file) => {
-      'mp4', 'jpg', 'png', 'pdf'
+       'jpg', 'png'
     }, 
     public_id: (req, file) => (
       new Date().toISOString().replace(/:/g, "-") + file.originalname
