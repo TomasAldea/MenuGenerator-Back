@@ -72,7 +72,7 @@ exports.login = async (req, res) => {
       user.hashedPassword
     );
     if (!hasCorrectPassword) {
-      return res.status(401).json({ message: "Unauthorize" });
+      return res.status(401).json({ message: "Incorrect password" });
     }
 
     req.session.userId = user._id;
